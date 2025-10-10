@@ -1,0 +1,32 @@
+<%- include('partials/header', { pageTitle: 'Home' }) %>
+
+<% if (posts.length === 0) { %>
+  <div class="empty">
+    <p>No posts yet. Create your first one!</p>
+    <a href="/posts/new" class="button primary">Create Post</a>
+  </div>
+<% } else { %>
+  <ul class="posts">
+    <% posts.forEach(function(post) { %>
+      <li class="post-card">
+        <h2 class="post-title"><a href="/posts/<%= post.id %>"><%= post.title %></a></h2>
+        <p class="post-meta">
+          <%= post.updatedAt ? 'Updated' : 'Created' %>
+          <time datetime="<%= (post.updatedAt || post.createdAt).toISOString() %>">
+            <%= (post.updatedAt || post.createdAt).toLocaleString() %>
+          </time>
+        </p>
+        <p class="post-excerpt"><%= post.content.length > 180 ? post.content.slice(0, 180) + '…' : post.content %></p>
+        <div class="actions">
+          <a class="button" href="/posts/<%= post.id %>">View</a>
+          <a class="button" href="/posts/<%= post.id %>/edit">Edit</a>
+          <form action="/posts/<%= post.id %>/delete" method="post" class="inline">
+            <button type="submit" class="button danger" onclick="return confirm('Delete this post?')">Delete</button>
+          </form>
+        </div>
+      </li>
+    <% }) %>
+  </ul>
+<% } %>
+
+<%- include('partials/footer') %>
