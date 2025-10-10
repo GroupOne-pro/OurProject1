@@ -1,0 +1,21 @@
+<%- include('partials/header', { pageTitle: post.title }) %>
+
+<article class="card">
+  <h1><%= post.title %></h1>
+  <p class="post-meta">
+    <%= post.updatedAt ? 'Updated' : 'Created' %>
+    <time datetime="<%= (post.updatedAt || post.createdAt).toISOString() %>">
+      <%= (post.updatedAt || post.createdAt).toLocaleString() %>
+    </time>
+  </p>
+  <pre class="post-body"><%= post.content %></pre>
+  <div class="actions">
+    <a class="button" href="/">Back</a>
+    <a class="button" href="/posts/<%= post.id %>/edit">Edit</a>
+    <form action="/posts/<%= post.id %>/delete" method="post" class="inline">
+      <button type="submit" class="button danger" onclick="return confirm('Delete this post?')">Delete</button>
+    </form>
+  </div>
+</article>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,28 @@
+<%- include('partials/header', { pageTitle: 'Create Post' }) %>
+
+<section class="card">
+  <h1>Create Post</h1>
+
+  <% if (typeof error !== 'undefined' && error) { %>
+    <div class="alert error"><%= error %></div>
+  <% } %>
+
+  <form action="/posts" method="post" class="form">
+    <label>
+      Title
+      <input type="text" name="title" value="<%= form && form.title ? form.title : '' %>" required />
+    </label>
+
+    <label>
+      Content
+      <textarea name="content" rows="8" required><%= form && form.content ? form.content : '' %></textarea>
+    </label>
+
+    <div class="actions">
+      <a href="/" class="button">Cancel</a>
+      <button type="submit" class="button primary">Create</button>
+    </div>
+  </form>
+</section>
+
+<%- include('partials/footer') %>
